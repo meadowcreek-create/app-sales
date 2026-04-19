@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meadow Creek Co.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fdf8f2;
+      --warm: #f5ede0;
+      --bark: #5c3d2e;
+      --gold: #c8923a;
+      --gold-light: #f0d9b5;
+      --ink: #1e130c;
+      --muted: #8a7060;
+      --border: #e8ddd0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    .serif { font-family: 'Lora', serif; }
+
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(253,248,242,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      font-family: 'Lora', serif; font-size: 1.1rem;
+      color: var(--bark); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--bark); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+    .nav-link:hover { color: var(--bark); }
+
+    .brand-header {
+      max-width: 1080px; margin: 0 auto;
+      padding: 72px 24px 52px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand-name {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      color: var(--bark); letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .brand-tagline {
+      margin-top: 10px; font-size: 1rem;
+      color: var(--muted); font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    .apps-section { max-width: 1080px; margin: 0 auto; padding: 56px 24px; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 28px; display: block;
+    }
+    .app-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .app-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      transition: all 0.2s ease; display: flex; flex-direction: column;
+    }
+    .app-card:hover { box-shadow: 0 12px 40px rgba(92,61,46,0.1); transform: translateY(-3px); }
+    .app-card-header {
+      padding: 28px 28px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .app-icon {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: var(--warm); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; border: 1px solid var(--gold-light);
+    }
+    .app-name { font-family: 'Lora', serif; font-size: 1.05rem; color: var(--bark); line-height: 1.3; margin-bottom: 6px; }
+    .badge-live {
+      display: inline-block; background: #dcfce7; color: #166534;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; border-radius: 999px; padding: 2px 10px;
+    }
+    .badge-soon {
+      display: inline-block; background: var(--warm); color: var(--muted);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; border-radius: 999px; padding: 2px 10px;
+      border: 1px solid var(--border);
+    }
+    .app-card-body { padding: 22px 28px; flex: 1; }
+    .app-card-body p { font-size: 0.93rem; color: var(--muted); line-height: 1.7; }
+    .app-card-body ul { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; list-style: none; }
+    .app-card-body ul li { font-size: 0.87rem; color: #374151; display: flex; align-items: flex-start; gap: 8px; }
+    .app-card-body ul li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .app-card-footer {
+      padding: 18px 28px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .app-price { font-size: 1.4rem; font-weight: 700; color: var(--bark); letter-spacing: -0.03em; }
+    .app-price-note { font-size: 0.74rem; color: var(--muted); margin-top: 1px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bark); color: #fff; border-radius: 8px;
+      padding: 10px 20px; font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: all 0.18s ease;
+    }
+    .btn:hover { background: #3e2920; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(92,61,46,0.25); }
+    .btn-disabled {
+      display: inline-flex; align-items: center;
+      background: var(--warm); color: var(--muted); border-radius: 8px;
+      padding: 10px 20px; font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      border: 1px solid var(--border); cursor: default;
+    }
+
+    .app-detail { background: var(--warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .app-detail-inner { max-width: 1080px; margin: 0 auto; padding: 72px 24px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    @media (max-width: 740px) { .detail-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .detail-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block;
+    }
+    .detail-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--bark); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .detail-body { font-size: 0.97rem; color: var(--muted); line-height: 1.8; margin-bottom: 36px; }
+
+    .steps { display: flex; flex-direction: column; }
+    .step { display: flex; gap: 18px; position: relative; padding-bottom: 32px; }
+    .step:last-child { padding-bottom: 0; }
+    .step-line { position: absolute; left: 15px; top: 34px; bottom: 0; width: 2px; background: var(--gold-light); }
+    .step:last-child .step-line { display: none; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: var(--bark); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.82rem; position: relative; z-index: 1;
+    }
+    .step h3 { font-weight: 600; font-size: 0.97rem; margin-bottom: 4px; color: var(--bark); }
+    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .feat-grid { grid-template-columns: 1fr; } }
+    .feat-item { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .feat-item h4 { font-weight: 600; font-size: 0.9rem; color: var(--bark); margin-bottom: 4px; }
+    .feat-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+
+    .story-section { max-width: 1080px; margin: 0 auto; padding: 64px 24px; border-bottom: 1px solid var(--border); }
+    .story-card {
+      max-width: 640px; margin: 24px auto 0;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px;
+    }
+    @media (max-width: 600px) { .story-card { padding: 28px 22px; } }
+    .story-card p { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; line-height: 1.85; color: var(--bark); }
+    .story-card .attr { margin-top: 20px; font-family: 'Nunito', sans-serif; font-style: normal; font-size: 0.84rem; color: var(--muted); }
+
+    .pricing-section { max-width: 1080px; margin: 0 auto; padding: 72px 24px; text-align: center; }
+    .pricing-card {
+      background: #fff; border: 2px solid var(--gold-light);
+      border-radius: 24px; padding: 40px;
+      max-width: 400px; margin: 32px auto 0;
+      box-shadow: 0 16px 48px rgba(92,61,46,0.09);
+    }
+    .price-tag { font-size: 3.2rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--bark); }
+    .price-note { color: var(--muted); font-size: 0.88rem; margin-top: 4px; margin-bottom: 24px; }
+    .check-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
+    .check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 0.91rem; color: #374151; }
+    .check-dot {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+      background: #fef3c7; display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; color: #92400e;
+    }
+    .btn-full {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bark); color: #fff; border-radius: 10px;
+      padding: 15px; font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      transition: all 0.18s ease; width: 100%;
+    }
+    .btn-full:hover { background: #3e2920; box-shadow: 0 6px 20px rgba(92,61,46,0.25); }
+    .footnote { font-size: 0.75rem; color: var(--muted); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); line-height: 1.6; text-align: left; }
+
+    footer { border-top: 1px solid var(--border); }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto; padding: 30px 24px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 12px;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--bark); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { opacity: 0; animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.2s; } .d3 { animation-delay: 0.32s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">🌿</div>
+      Meadow Creek Co.
+    </a>
+    <div style="display:flex;gap:24px;align-items:center;">
+      <a href="#apps" class="nav-link">Apps</a>
+      <a href="#buy" class="nav-link">Buy</a>
+    </div>
+  </div>
+</nav>
+
+<!-- BRAND HEADER -->
+<div class="brand-header fade-up">
+  <h1 class="brand-name serif">Meadow Creek Co.</h1>
+  <p class="brand-tagline">Simple elegant solutions.</p>
+</div>
+
+<!-- APP CARDS -->
+<section class="apps-section" id="apps">
+  <span class="section-label">Apps</span>
+  <div class="app-cards">
+
+    <!-- App 1 -->
+    <div class="app-card fade-up">
+      <div class="app-card-header">
+        <div class="app-icon">🌳</div>
+        <div>
+          <div class="app-name serif">Personal Family Tree<br/>Photo Album</div>
+          <div style="margin-top:6px;font-size:0.78rem;color:var(--muted);">Android &nbsp;·&nbsp; <span class="badge-live">Available Now</span></div>
+        </div>
+      </div>
+      <div class="app-card-body">
+        <p>A photo album arranged as a family tree — grandparents at the top, great-grandchildren at the bottom. Full size photos. One photo per frame. A name can be added to each. Navigate with swipes or on-screen buttons — older generations above, younger generations below.</p>
+        <ul>
+          <li>Six generations — grandparents to great-grandchildren</li>
+          <li>Full size photos, one per frame, with optional name</li>
+          <li>PIN-protected setup</li>
+          <li>Completely private — no internet connection required</li>
+        </ul>
+      </div>
+      <div class="app-card-footer">
+        <div>
+          <div class="app-price">$[PRICE]</div>
+          <div class="app-price-note">one-time payment</div>
+        </div>
+        <a href="#detail-personal" class="btn">Learn More →</a>
+      </div>
+    </div>
+
+    <!-- App 2 -->
+    <div class="app-card fade-up d1">
+      <div class="app-card-header">
+        <div class="app-icon">📜</div>
+        <div>
+          <div class="app-name serif">Ancestry Family Tree<br/>Photo Album</div>
+          <div style="margin-top:6px;font-size:0.78rem;color:var(--muted);">Android &nbsp;·&nbsp; <span class="badge-soon">Coming Soon</span></div>
+        </div>
+      </div>
+      <div class="app-card-body">
+        <p>The same easy tree navigation, with no generation limit. Add photos and names from your earliest known ancestor all the way to the present. A simple way to bring your family history to life.</p>
+        <ul>
+          <li>Unlimited generations</li>
+          <li>Full size photos, one per frame, with optional name</li>
+          <li>Home button returns to the top of the tree</li>
+          <li>Favorite button returns to any frame you designate</li>
+          <li>PIN-protected setup</li>
+          <li>Completely private — no internet connection required</li>
+        </ul>
+      </div>
+      <div class="app-card-footer">
+        <div>
+          <div class="app-price" style="color:var(--muted);font-size:1rem;">Coming Soon</div>
+          <div class="app-price-note">price to be announced</div>
+        </div>
+        <div class="btn-disabled">Not Yet Available</div>
+      </div>
+    </div>
+
+    <!-- App 3 -->
+    <div class="app-card fade-up d2">
+      <div class="app-card-header">
+        <div class="app-icon">🗂️</div>
+        <div>
+          <div class="app-name serif">TreeFolio<br/>Photo Organizer</div>
+          <div style="margin-top:6px;font-size:0.78rem;color:var(--muted);">Android &nbsp;·&nbsp; <span class="badge-soon">Coming Soon</span></div>
+        </div>
+      </div>
+      <div class="app-card-body">
+        <p>A tree-structured photo organizer for anything — not just families. Start with a broad category, then branch into subcategories and details. No folders, no file browsing. Just open it and navigate.</p>
+        <ul>
+          <li>Build any tree structure you need</li>
+          <li>Works for projects, collections, products — any grouped photos</li>
+          <li>Home button returns to the top of the tree</li>
+          <li>Favorite button returns to any frame you designate</li>
+          <li>PIN-protected setup</li>
+          <li>Completely private — no internet connection required</li>
+        </ul>
+      </div>
+      <div class="app-card-footer">
+        <div>
+          <div class="app-price" style="color:var(--muted);font-size:1rem;">Coming Soon</div>
+          <div class="app-price-note">price to be announced</div>
+        </div>
+        <div class="btn-disabled">Not Yet Available</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APP 1 DETAIL -->
+<div class="app-detail" id="detail-personal">
+  <div class="app-detail-inner">
+    <div class="detail-grid">
+
+      <!-- Left: How it works -->
+      <div>
+        <span class="detail-label">Personal Family Tree Photo Album</span>
+        <h2 class="detail-title serif">How it works</h2>
+        <p class="detail-body">
+          The album is centred around one person. The app opens to their photo. From there, they can move through their family tree using swipes or the navigation buttons — older generations above, younger generations below, siblings side by side. One button returns to the home person at any time. Once set up, the album is completely private. No internet connection is ever required.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-num">1</div>
+            <div>
+              <h3>Use a PIN to enter setup mode</h3>
+              <p>Add photos and names across six generations — grandparents down to great-grandchildren. Full size photos, one per frame. A name can be added to each.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-num">2</div>
+            <div>
+              <h3>Give it to the user</h3>
+              <p>Add the photos and names you want, then give it to your loved one. You can make additions and edits to the album anytime.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-num">3</div>
+            <div>
+              <h3>Navigate their family tree</h3>
+              <p>Swipe or use the on-screen buttons. Older generations above, younger generations below, siblings side by side.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>Completely private</h3>
+              <p>No Wi-Fi, no accounts, no cloud. All photos stay on the device.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Features -->
+      <div>
+        <h2 class="detail-title serif">Features</h2>
+        <div class="feat-grid">
+          <div class="feat-item">
+            <h4>Six generations</h4>
+            <p>Grandparents, parents, the home person and siblings, children, grandchildren, and great-grandchildren.</p>
+          </div>
+          <div class="feat-item">
+            <h4>Full size photos</h4>
+            <p>One photo per frame. A name can be added to each.</p>
+          </div>
+          <div class="feat-item">
+            <h4>Simple navigation</h4>
+            <p>Swipe or use the on-screen buttons. Older generations above, younger below, siblings side by side.</p>
+          </div>
+          <div class="feat-item">
+            <h4>PIN-protected setup</h4>
+            <p>Only someone with the PIN can add, edit, or remove photos and names. The user just sees photos.</p>
+          </div>
+          <div class="feat-item">
+            <h4>Auto-launch on startup *</h4>
+            <p>The app can be set to open automatically when the device is turned on. Most devices supported — see FAQs.</p>
+          </div>
+          <div class="feat-item">
+            <h4>Completely private</h4>
+            <p>No internet connection required. No accounts. Photos stay on the device.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PERSONAL STORY -->
+<div class="story-section">
+  <span class="section-label" style="text-align:center;display:block;">Why this app exists</span>
+  <div class="story-card">
+    <p>
+      "I wish I could have given my mother something like this, so she could easily browse through photos of her family — her siblings and their families. That was the inspiration for this app."
+    </p>
+    <p class="attr">— [Your name], Meadow Creek Co.</p>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-section" id="buy">
+  <span class="section-label" style="display:block;text-align:center;">Personal Family Tree Photo Album</span>
+  <h2 class="serif" style="font-size:clamp(1.7rem,3vw,2.4rem);color:var(--bark);letter-spacing:-0.02em;">One payment. Yours to keep.</h2>
+
+  <div class="pricing-card">
+    <div class="price-tag">$[PRICE]</div>
+    <div class="price-note">one-time · Android · no subscription</div>
+    <div class="check-list">
+      <div class="check-item"><div class="check-dot">✓</div>Six generations — grandparents to great-grandchildren</div>
+      <div class="check-item"><div class="check-dot">✓</div>Full size photos, one per frame, with optional name</div>
+      <div class="check-item"><div class="check-dot">✓</div>Simple swipe and button navigation</div>
+      <div class="check-item"><div class="check-dot">✓</div>PIN-protected setup</div>
+      <div class="check-item"><div class="check-dot">✓</div>Completely private — no internet connection required</div>
+      <div class="check-item"><div class="check-dot">✓</div>Auto-launch on device startup *</div>
+      <div class="check-item"><div class="check-dot">✓</div>Free updates</div>
+    </div>
+    <a href="YOUR_STRIPE_LINK_HERE" class="btn-full">Buy Now →</a>
+    <div class="footnote">* Auto-launch on startup is not supported on Amazon Fire tablets.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span style="font-family:'Lora',serif;color:var(--bark);">Meadow Creek Co.</span>
+    <div style="display:flex;gap:24px;">
+      <a href="mailto:you@yourdomain.com">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <span>© 2026 Meadow Creek Co. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
